@@ -1,0 +1,263 @@
+# Common references
+components:
+    schemas:
+        User:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    readOnly: true
+                username:
+                    type: string
+                    description: The username of user
+                password:
+                    type: string;
+                    description: The password of user
+                email:
+                    type: string
+                    format: email
+                    description: The user email
+                phone:
+                    type: string
+                    description: The user phone number
+                role:
+                    type: string
+                    enum:
+                        - admin
+                        - user
+                    description: The user role
+                created_at:
+                    type: string
+                    format: date-time
+                    description: The created time of user
+                updated_at:
+                    type: string
+                    format: date-time
+                    description: The updated time of user
+        UserRegister:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    readOnly: true
+                username:
+                    type: string
+                    description: username of user
+                password:
+                    type: string
+                    description: password of user
+                email:
+                    type: string
+                    format: email
+                    description: user email
+                phone:
+                    type: string
+                    description: user phone number
+        UserLogin:
+            type: object
+            properties:
+                username:
+                    type: string
+                    description: username of user
+                password:
+                    type: string
+                    description: password of user
+        Campaign:
+            type: object
+            properties:
+                campaign_id:
+                    type: integer
+                    readOnly: true
+                title:
+                    type: string
+                    description: Title of the campaign
+                description:
+                    type: string
+                    description: Description of the campaign
+                goal_amount:
+                    type: number
+                    format: decimal
+                    description: Goal amount for the campaign
+                raised_amount:
+                    type: number
+                    format: decimal
+                    description: Amount raised so far
+                start_date:
+                    type: string
+                    format: date
+                    description: Start date of the campaign
+                end_date:
+                    type: string
+                    format: date
+                    description: End date of the campaign
+                created_at:
+                    type: string
+                    format: date-time
+                    description: Timestamp of when the campaign was created
+                campaign_manager_id:
+                    type: string
+                    format: integer
+                    description: Timestamp of the last update
+
+    responses:
+        "200NoData":
+            content:
+                application/json:
+                    schema:
+                        type: object
+                        properties:
+                            status:
+                                type: string
+                                description: The response status
+                                enum:
+                                    - success
+                            data:
+                                type: object
+                                nullable: true
+                                default: null
+                                description: The response data
+        "200":
+            description: Success
+            content:
+                application/json:
+                    schema:
+                        type: object
+                        properties:
+                            status:
+                                type: string
+                                description: The response status
+                                enum:
+                                    - success
+                            data:
+                                type: object
+                                description: The response data
+        "201":
+            description: Created successfully
+            content:
+                application/json:
+                    schema:
+                        type: object
+                        properties:
+                            status:
+                                type: string
+                                description: The response status
+                                enum:
+                                    - success
+                            data:
+                                type: object
+                                description: The response data
+        "400":
+            description: Bad Request
+            content:
+                application/json:
+                    schema:
+                        type: object
+                        properties:
+                            status:
+                                type: string
+                                enum: [error]
+                                description: The response status
+                            message:
+                                type: string
+                                description: Detailed error message
+        "401":
+            description: Unauthorized
+            content:
+                application/json:
+                    schema:
+                        type: object
+                        properties:
+                            status:
+                                type: string
+                                enum: [error]
+                                description: The response status
+                            message:
+                                type: string
+                                description: Authentication required
+        "403":
+            description: Forbidden
+            content:
+                application/json:
+                    schema:
+                        type: object
+                        properties:
+                            status:
+                                type: string
+                                enum: [error]
+                                description: The response status
+                            message:
+                                type: string
+                                description: Access denied
+        "404":
+            description: Not Found
+            content:
+                application/json:
+                    schema:
+                        type: object
+                        properties:
+                            status:
+                                type: string
+                                enum: [error]
+                                description: The response status
+                            message:
+                                type: string
+                                description: Resource not found
+        "500":
+            description: Internal Server Error
+            content:
+                application/json:
+                    schema:
+                        type: object
+                        properties:
+                            status:
+                                type: string
+                                enum: [error]
+                                description: The response status
+                            message:
+                                type: string
+                                description: Internal server error
+
+    parameters:
+        CampaignId:
+            name: id
+            in: path
+            required: true
+            description: The ID of the campaign
+            schema:
+                type: integer
+        CampaignRequest:
+            in: requestBody
+            required: true
+            description: Campaign data to create or update
+            content:
+                application/json:
+                    schema:
+                        $ref: '#/components/schemas/Campaign'
+        userId:
+            name: id
+            in: path
+            required: true
+            description: The ID of the user
+            schema:
+                type: integer
+        categoryId:
+            name: id
+            in: path
+            required: true
+            description: The ID of the category
+            schema:
+                type: integer
+        donationId:
+            name: donation_id
+            in: path
+            required: true
+            description: The ID of the donation
+            schema:
+                type: integer
+        transactionId:
+            name: transaction_id
+            in: path
+            required: true
+            description: The ID of the transaction
+            schema:
+                type: integer
